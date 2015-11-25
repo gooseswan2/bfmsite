@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Big Fan Mail</title>
+<link rel="stylesheet" href="/static/css/bfm.css" />
+<link rel="stylesheet" href="/static/css/{{ request.session.bfteam }}.css" />
+<meta name="keywords" content="Big Fan Mail"/>
+<meta name="description" content=""/>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>		
+<div id="topblack">
+   <div style="padding: 0 0 0 50px;">BIG<b>FAN</b>MAIL.COM</div>
+</div>
+<div id="container">
+  <div class="fleft">
+<!-- Navigation -->
+   <div id="headerPane">
+      <div style="margin: 0; padding: 0;">
+           <div id="upperleft"><a href="/"><img src="/static/img/bfm-smlogo.jpg" /></a></div>
+           <ul id="topnav">
+             <li><a href="/features/">FEATURES</a></li>
+             <li><a href="/findyourteam/">FIND YOUR TEAM</a></li>
+             <li><a href="/partners/">BECOME A PARTNER</a></li>
+             <li><a href="/support/">SUPPORT</a></li>
+           </ul>
+      </div>
+      <div class="clearx"></div>
+      <div style="height: 50px;float: right;margin: 20px 10px 0 0;"><a href="https://twitter.com/BigFanMail"><img src="/static/img/bfm-twitter2.jpg"></a></div>
+      <div style="float: right;margin: 20px 10px 0 0;"><a href="https://www.facebook.com/pages/Big-Fan-Mail/159972567525896" target="face"><img src="/static/img/bfm-fbook2.jpg"></a></div>
+   </div>
+<!-- Left side of main page -->
+   <div id="leftContainer">
+      <div id="bodyPane">
+         <div class="clearx"></div>
+{% block bodyPane %}
+         <div class="fleft" style="padding: 50px 75px 0 70px;"><a href="/findyourteam"><img src="/static/img/bfm-main2.png" /></a>
+         </div>
+         <div class="fleft" style="padding: 60px 0 0 0;">
+           <a href="/findyourteam"><img src="/static/img/bfm-hometext2.png"></a>
+         </div>
+         <div class="clearx" style="height: 75px;"></div>
+         <div class="smhead">
+            <div class="smheadimg" style="padding: 0 0 41px 0;"><a href="/features"><img src="/static/img/bfm-smhead1.jpg" /></a></div>
+            BIG<b>FAN</b> MAIL<br>FEATURES
+            <div class="above_pyr">
+               <div class="sectbox" style="width: 150px; height: 146px;"><br>LOVE YOUR<br>TEAM? DO IT<br>THROUGH YOUR<br>INBOX.</div>
+            </div>
+         </div>
+         <div class="smhead">
+            <div class="smheadimg" style="padding: 0 0 37px 0;"><a href="/findyourteam"><img src="/static/img/bfm-smhead2.jpg" /></a></div>
+            FIND YOUR<br>TEAM
+            <div class="above_pyr">
+               <div class="sectbox" style="width: 150px; height: 146px;"><br>NCAA. NFL. NHL.<br>GET<br>[YOUR NAME]@<br>BIG[TEAM]FAN.COM</div>
+            </div>
+            </a>
+         </div>
+         <div class="smhead">
+            <div class="smheadimg" style="padding: 0 0 35px 0;"><a href="/partners"><img src="/static/img/bfm-smhead3.jpg" /></a></div>
+            BECOME A<br>PARTNER
+            <div class="above_pyr">
+               <div class="sectbox" style="width: 150px; height: 146px;"><br>UNIVERSITY?<br>TEAM? LET US<br>EARN MONEY<br>FOR YOU.</div>
+            </div>
+         </div>
+         <div class="smhead">
+            <div class="smheadimg" style="padding: 0 0 39px 0;"><a href="/support"><img src="/static/img/bfm-smhead4.jpg" /></a></div>
+            BIG<b>FAN</b> MAIL<br>SUPPORT
+            <div class="above_pyr">
+               <div class="sectbox" style="width: 150px; height: 146px;"><br>WE'LL HELP YOU<br>SET UP YOUR BIGFAN EMAIL.</div>
+            </div>
+         </div>
+{% endblock %}
+      </div>
+
+   </div>
+  </div>
+<!-- Right side of main page -->
+  <div id="rightContainer">
+           <div><img src="/static/img/bfm-login.jpg" /></div>
+           <div style="background-color: #ee2e24; margin: 0; padding: 0;">            
+{% if not request.user.is_authenticated %}
+             <form method="post" action="/bflogin/">
+         {% csrf_token %}
+                <table>
+                  <tr>
+                    <td>User:</td>
+                    <td><input class="required" id="id_username1" size="15" maxlength="75" name="username" type="text" value="" /></td>
+                  </tr>
+                  <tr>
+                    <td>Password:</td>
+                    <td><input class="required" id="id_password1" size="15" maxlength="30" name="password" type="password" value="" /></td>
+                  </tr>
+                </table>
+                <a href="/forgotpassword">Forgot your password</a><br>
+                <input type="submit" value="login" />
+   {% if nexturl %}
+                <input type="hidden" name="next" value="{{ nexturl }}" />
+   {% else %}
+                <input type="hidden" name="next" value="{{ request.get_full_path }}" />
+   {% endif %}
+             </form>
+   {% if error %}
+                {{ error }}<br>
+   {% endif %}
+{% else %}
+             Hi <a href="/profile/">{{ request.user.username }}</a> <a href="/bflogout/">LOGOUT</a>
+{% endif %}
+           </div>
+           <div>
+              <a href="/findyourteam"><img src="/static/img/bfm-1500b.png" width="226"></a>
+              <a href="/findyourteam"><img src="/static/img/bfm-1500under.png" width="226"></a>
+           </div>
+           <div>
+              <a href="/partners"><img src="/static/img/bfm-become.jpg" width="226"></a>
+           </div>
+           <div>
+              <a href="/support"><img src="/static/img/bfm-setup.jpg" width="226"></a>
+           </div>
+  </div>
+  <div class="clearx"></div>
+  <div id="copyrightFooter">
+         <div style="text-align: center; color: #ee2e24;">
+            <a href="/">Big Fan Mail</a> | <a href="/features">Features</a> | <a href="/findyourteam">Find Your Team</a> | <a href="/partners">Become a Partner</a> | <a href="/support">Support</a> | <a href="/terms">Terms and Conditions</a> | <a href="/privacy">Privacy Policy</a> | Email: <a href="mailto:sales@bigfanmail.com">sales@bigfanmail.com</a>
+            <br>Copyright &#0169 2014 Big Fan Mail, LLC
+         </div>
+  </div>
+</div>
+</body>
+</html>

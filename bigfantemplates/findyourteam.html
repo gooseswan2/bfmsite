@@ -1,0 +1,90 @@
+{% extends "base_generic.html" %}
+{% block bodyPane %}
+         <div style="padding: 0 0 20px 40px; border: 0px solid black;">
+{% if not bfteams %}
+            <div class="fleft" style="width: 537px; height: 370px; background-image: URL('/static/img/bfm-findyourteam3.png')">
+              <div style="padding: 0 0 0px 0;">
+                <!--<div id="teamsearch">
+                  <form action="">
+                   TEAM SEARCH<br>
+                   <input type="text" size="30" maxlength="50">
+                   <input type="submit" value="Submit">
+                  </form>
+                </div>-->
+              </div>
+              <div class="fleft" style="padding: 33px 0 55px 0;">
+                <div style="padding: 100px 0 0 80px; font-size: 1em">
+                 <div style="float: left; padding: 0 0 0px 0;"><img src="/static/img/bfm-balls1.png" usemap="#sportsmap"></div>
+                 <div style="float: left; padding: 0 4px 0 12px;"><a href="/ncaa/"><img src="/static/img/bfm-colleges.png"></a></div>
+                 <div id="ballsd" class="clearx">
+                   <table>
+                     <tr><td><a href="/nba/">Basketball</a></td><td><a href="/nfl/">Football</a></td><td><a href="/mlb/">Baseball</a></td><td><a href="/ncaa/">Colleges</a></td></tr>
+                   </table>
+                 </div>
+                 <div class="clearx"><img src="/static/img/bfm-balls2.png" usemap="#sportsmap2"></div>
+                 <div id="ballse">
+                     <table>
+                       <tr><td><a href="/nhl/">Hockey</a></td><td><a href="/socc/">Soccer</a></td><td><a href="">Nascar</a></td></tr>
+                     </table>
+                 </div>
+                 <!--<img src="/static/img/bfm-balls.png" />-->
+                 <!--<table id="ballstbl" style="padding: 30px 0 0 15px;">
+                   <tr><td><a href="/nfl/">FOOTBALL</a></td><td><a href="/college/">COLLEGE</a></td><td><a href="/soccer/">SOCCER</a></td></tr>
+                 </table>-->
+                </div>
+                <div style="padding: 30px 0 0 32px;">
+   {% if group == 'nascar' %}
+                <div class="red" style="text-align: center;">NASCAR ADDRESSES COMING SOON!</div>
+   {% endif %}
+{% else %}
+            <div>
+              <div style="width: 900px; height: 325px; padding: 0 0 55px 0; background-image: URL('/static/img/bfm-findyourteam2.png'); background-repeat: no-repeat;">
+   {% if group == 'socc' or group == 'ncaa'%}
+                <div style="float: left; border: 0px solid black; padding: 100px 0 0 5px; width: 500px;">If you can't find the team you want, just <a href="mailto:support@bigfanmail.com">email us</a> and tell us what you are looking for.</div>
+                <div style="float: left; margin: 0 0 0 43px; font-size: 1em; padding: 30px 0 50px 0;">
+   {% else %}
+                <div style="float: left; margin: 0 0 0 548px; font-size: 1em; padding: 30px 0 50px 0;">
+   {% endif %}
+                 <div style="float: left; padding: 0 0 5px 0;"><img src="/static/img/bfm-balls1.png" usemap="#sportsmap"></div>
+                 <div style="float: left; padding: 0 4px;"><a href="/ncaa/"><img src="/static/img/bfm-colleges.png"></a></div>
+                 <div id="ballsd" class="clearx">
+                   <table>
+                     <tr><td><a href="/nba/">Basketball</a></td><td><a href="/nfl/">Football</a></td><td><a href="/mlb/">Baseball</a></td><td><a href="/ncaa/">Colleges</a></td></tr>
+                   </table>
+                 </div>
+                 <div class="clearx"><img src="/static/img/bfm-balls2.png" usemap="#sportsmap2"></div>
+                 <div id="ballse">
+                     <table>
+                       <tr><td><a href="/nhl/">Hockey</a></td><td><a href="/socc/">Soccer</a></td><td><a href="/nascar/">Nascar</a></td></tr>
+                     </table>
+                 </div>
+                </div>
+                <div style="float: left; padding: 45px 0 0 32px;">
+   {% for x in bfteams %}
+      {% if forloop.counter == 7 or forloop.counter == 13 or forloop.counter == 19 or forloop.counter == 25 or forloop.counter = 31 or forloop.counter = 37 or forloop.counter = 43  or forloop.counter = 49 or forloop.counter = 55 %}
+                </div>
+                <div class="clearx"></div>
+                <div style="padding: 45px 0 0 32px;">
+      {% endif %}
+                   <div class="fleft" style="padding-right: 31px; "><a href="/register/teampage/{{ x }}"><img class="imge" src="/static/img/bfm-smhead{{ x }}.png"></a></div>
+   {% endfor %}
+{% endif %}
+                </div>
+                <div class="clearx"></div>
+              </div>
+            </div>
+{% if not bfteams %}
+            <div class="fleft" style="padding: 0 0 0 90px;"><img src="/static/img/bfm-bighead2.png"></div>
+{% endif %}
+         </div>
+<map name="sportsmap">
+  <area shape="rect" coords="0,0,70,48" href="/nba/" alt="nba">
+  <area shape="rect" coords="71,0,140,48" href="/nfl/" alt="nfl">
+  <area shape="rect" coords="141,0,220,48" href="/mlb/" alt="mlb">
+</map>
+<map name="sportsmap2">
+  <area shape="rect" coords="0,0,70,48" href="/nhl/" alt="nhl">
+  <area shape="rect" coords="71,0,140,48" href="/socc/" alt="soccer">
+  <area shape="rect" coords="141,0,220,48" href="/nascar/" alt="Nascar Coming Soon!">
+</map>
+{% endblock %}

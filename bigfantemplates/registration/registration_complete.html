@@ -1,0 +1,17 @@
+{% extends "base_generic.html" %}
+{% block bodyPane %}
+<div id="genpage">
+          <div id="diagonal" class="fleft" style="background-image: URL('/static/img/bfm-congrats.png')">
+                <div class="red" style="font-size: 1.1em; padding: 100px 0 0 0;"><br><br>
+                You will receive an email confirming your purchase of {{ request.user.username }}. You will then receive a second email from our support staff letting you know once it is configured and all set to go. To access your BigFanMail Memberzone account, go <a href="/profile">here</a>. Your first 90 days of use are free of charge.
+                </div>
+          </div>
+          <div class="fleft" style="padding: 0 0 0 0;width: 300px; position: relative; z-index: 2;">
+              <div style="padding: 10px 7px; text-align: center; background-color: #e5e6e7; ">Enjoy Your Big Fan Mail email address!!!!</div>
+              <div class="teamback" style="text-align: center; padding: 5px; color: #ffffff;">
+                 <b>{{ request.user.username.upper }}</b>
+              </div>
+              <img src="/static/img/bfm-bighead{{ request.session.bfteam }}.png">
+          </div>
+</div>
+{% endblock %}

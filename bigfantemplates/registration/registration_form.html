@@ -1,0 +1,100 @@
+{% extends "base_generic.html" %}
+{% block bodyPane %}
+<script>
+$("document").ready(function() {
+$("#id_sec_question1").change(function()
+{
+    var firstSelect = $(this);
+
+    var value = $(this).find(':selected').val();
+
+    $("#id_sec_question2").each(function()
+    {
+        //if(firstSelect = $(this))
+        // return;
+
+        $(this).find('option').show();
+        $(this).find('option[value=' + value +']').hide();
+    });
+});
+});
+</script>
+<div style="padding: 0 0 0 50px;">
+          <div id="registration" class="fleft">
+            <div id="diagonal" style="background-image: URL('/static/img/bfm-register.png');">
+                <div style="padding: 120px 0 0 0;">(You are creating a User Account OUTSIDE of your BigFanMail email address in case you ever lose access. Your alternate email address is where we can reach you if you have problems with accessing your new BigFanMail email address.)</div>
+                <div class="red">{{ form.errors }}</div>
+                <form method="post" action="/register/">
+                {% csrf_token %}
+                <table cellpadding="5">
+                 <tr>
+                  <td>
+                   <br>USERNAME<br>
+                   <input type="text" id="rouser" name="username" size="30" readonly value={% if request.method == 'GET' %}"{{ request.GET.bigfanname }}"{% else %}{{ request.POST.username }}{% endif %}>
+                  </td>
+                  <td>
+                   ALTERNATE<br> EMAIL ADDRESS<br>
+                   {{ form.email }} 
+                  </td>
+                 </tr><tr>
+                  <td>
+                   FIRST NAME<br>
+                   {{ form.first_name }} 
+                  </td>
+                  <td>
+                   LAST NAME<br>
+                   {{ form.last_name }} 
+                  </td>
+                 </tr><tr>
+                  <td>
+                   <br>PASSWORD<br>
+                   {{ form.password1 }} 
+                  </td>
+                  <td>
+                   <br>PASSWORD(AGAIN)<br>
+                   {{ form.password2 }} 
+                  </td>
+                 </tr><tr>
+                  <td>
+                   SECURITY QUESTION 1<br>
+                   {{ form.sec_question1 }} 
+                  </td>
+                  <td>
+                   SECURITY ANSWER 1<br>
+                   {{ form.sec_answer1 }} 
+                  </td>
+                 </tr><!--<tr>
+                 <td>
+                   SECURITY QUESTION 2<br>
+                  </td>
+                  <td>
+                   SECURITY ANSWER 2<br>
+                  </td>
+                 </tr>--><tr>
+                  <td>
+                 {{ form.plan }} {{ form.domainname }} {{ form.bfname }}
+                  <input type="submit" value="submit" />
+                  <input type="hidden" name="next" value="{{ next }}" />
+                  </td></tr>
+                </table>
+              </form>
+            </div>
+          </div>
+          <div class="fleft" style="margin: 0 0 0 0; position: relative; z-index: 2;">
+             <div style="background-color: #e7e7e8; text-align: center; padding: 6px;">
+                Set Up Your BigFanMail <br>Member Zone Account!
+             </div>
+             <div class="teamback" style="text-align: center; font-size: .8em;padding: 6px;">
+{% if request.method == 'GET' %}
+                 <b>{{ bigfanname.upper }}</b>
+{% else %}
+                 <b>{{ request.POST.username.upper }}</b>
+{% endif %}
+             </div>
+             <div>
+                <img src="/static/img/bfm-bighead{{ request.session.bfteam }}.png">
+             </div>
+          </div>
+          <div class="clearx"></div>
+</div>
+{% endblock %}

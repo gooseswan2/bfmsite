@@ -1,0 +1,109 @@
+import stripe
+import decimal
+import payments
+from bigfanmail import settings
+from bigfanmail.customers.models import BFCustomer
+from bigfanmail.domains.models import Account
+from django.views.decorators.http import require_POST
+from django.shortcuts import render, redirect, render_to_response
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist 
+from payments.models import (
+    Customer,
+    CurrentSubscription,
+    Event,
+    EventProcessingException
+)
+import logging
+
+logger = logging.getLogger(__name__)
+
+
+# Create your views here.
+
+#def subscribe(request):
+#   stripe.api_key = "sk_test_pq34fomkaa9LGBjOK5bdxYLa"
+#
+# Get the credit card details submitted by the form
+#   token = request.POST['stripeToken']
+#
+# Create a Customer
+##
+#   customer = Customer.create(
+#     card=token,
+#     plan="111",
+#     email="payinguser@example.com"
+#   )
+@require_POST
+@login_required
+def subscribe(request):
+  if 'terms' in request.POST:
+    try:
+            try:
+                customer = request.user.customer
+            except ObjectDoesNotExist:
+                customer = Customer.create(request.user, charge_immediately=False)
+            customer.update_card(request.POST.get("stripeToken"))
+            bfcust = request.user 
+            bfcust.add1 = request.POST['address1']
+            bfcust.add2 = request.POST['address2']
+            bfcust.city = request.POST['city']
+            bfcust.state = request.POST['state']
+            bfcust.zipcode = request.POST['zipcode']
+            bfcust.save()
+            if 'autorenew' in request.POST:
+               acct = request.session['bfacct']
+               acct.auto_renew = True
+               acct.save()
+               logger.debug('in subscribe, before I subscribe')
+               customer.subscribe(acct.bfname.product.product_name)
+            else:
+               customer.charge(decimal.Decimal(acct.bfname.product.price), description="acct.bfname.product.description")
+    except stripe.StripeError as e:
+            try:
+                data = {}
+                data["error"] = e.args[0]
+            except IndexError:
+                data["error"] = "Unknown error"
+            return render(request, 'registration/creditcard.html', {})
+#    return _ajax_response(request, "payments/_subscribe_form.html", **data)
+#    return render(request, 'registration/registration_complete.html', {})
+    return redirect('/registration_complete')
+  else:
+    return render(request, 'registration/creditcard.html', {})
+
+def registration_complete(request):
+    return render(request, 'registration/host_password.html', {})
+
+@login_required
+def editusers(request):
+    bfacct = Account.objects.filter(customer=request.user)
+    return render(request, 'user_edit.html',{'bfacct': bfacct})
+
+@login_required
+def saveusers(request):
+    bfcust = request.user
+    bfcust.first_name = request.POST['first_name']
+    bfcust.last_name = request.POST['last_name']
+    bfcust.add1 = request.POST['address1']
+    bfcust.add2 = request.POST['address2']
+    bfcust.city = request.POST['city']
+    bfcust.state = request.POST['state']
+    bfcust.zipcode = request.POST['zipcode']
+    bfcust.save()
+    return redirect('/profile')
+
+@require_POST
+@login_required
+def save_emailpassword(request):
+   if request.POST['hostpass1']:
+      if request.POST['hostpass1'] == request.POST['hostpass2']:
+         bfacct = request.session['bfacct']
+         bfacct.host_password = request.POST['hostpass1']
+         bfacct.save()
+         return render(request, 'registration/registration_complete.html', {})
+      else:
+         return render(request, 'registration/host_password.html', {}) 
+   else:
+      return render(request, 'registration/host_password.html', {}) 
+      

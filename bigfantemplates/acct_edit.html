@@ -1,0 +1,36 @@
+{% extends "base_generic.html" %}
+{% block bodyPane %}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://localhost/media/js/eldarion-ajax-core.js"></script>
+
+<div id="genpage">
+   <div id="changeinfo" style="width: 500px; background-image: URL('/static/img/bfm-changeinfo.png');">
+        <div style="padding: 0 25px 0 35px;">
+              <div class="fleft" style="margin: 0 35px 0 0;">
+                 <div class="black" style="padding: 0 0 10px 0;">BIG FAN EMAIL ADDRESS</div>
+                 <div>{{ thisacct.bfname.bfname }}@{{ thisacct.bfname.domain.domain_name}}</div>
+              </div>
+              <form action="/saveaccount/" method="POST">
+{% csrf_token %}
+              <div class="fleft">
+                 <div class="black" style="padding: 0 0 10px 0;">AUTO-RENEW</div>
+                 <div class="fleft"><input name="autorenew" type="checkbox" {% if thisacct.auto_renew %}checked{% endif %}></div>
+                 <div class="clearx"></div>
+              </div>
+              <div class="clearx"></div>
+              <div class="acctinfo">
+                 <div class="fleft"><input name="bigfan" type="hidden" value="{{ thissacct.bfname }}"></div>
+                 <div class="fleft"><input name="Submit" type="submit" value="Submit"></div>
+                 <div class="clearx"></div>
+              </div>
+              </form>
+        </div>
+        <div style="padding: 5px 0;"><a href="/profile">Back</a></div>
+   </div>
+   <div class="fleft" style="padding: 0 0 0 100px;">
+              <div class="teamback" style="text-align: center; color: #ffffff;">
+              </div>
+              <img src="/static/img/bfm-bighead2.png">
+   </div>
+</div>
+{% endblock %}

@@ -1,0 +1,141 @@
+{% extends "base_generic.html" %}
+{% block bodyPane %}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://localhost/media/js/eldarion-ajax-core.js"></script>
+<script src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript">
+  // This identifies your website in the createToken call below
+  Stripe.setPublishableKey('pk_live_CGgHX8jlzetasWESfzPWtZOo');
+  // ...
+  jQuery(function($) {
+    $('#payment-form').submit(function(event) {
+      var $form = $(this);
+
+      // Disable the submit button to prevent repeated clicks
+      $form.find('button').prop('disabled', true);
+
+      Stripe.createToken($form, stripeResponseHandler);
+
+      // Prevent the form from submitting with the default action
+      return false;
+    });
+  });
+
+  var stripeResponseHandler = function(status, response) {
+     var $form = $('#payment-form');
+
+     if (response.error) {
+       // Show the errors on the form
+       $form.find('.payment-errors').text(response.error.message);
+       $form.find('button').prop('disabled', false);
+     } else {
+       // token contains id, last4, and card type
+       var token = response.id;
+       // Insert the token into the form so it gets submitted to the server
+       $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+       // and submit
+       $form.get(0).submit();
+     }
+  };
+
+</script>
+<script>
+<!--
+function checkCheckBox(f){
+   if (f.terms.checked == false )
+   {
+      alert("Please check the box to confirm that you agree with our terms and conditions.");
+      return false;
+   } else {
+      return true;
+   }
+}
+-->
+</script>
+
+<div id="genpage">
+   <div id="diagonal" class="fleft" style="margin: 0 0 0 35px; background-image: URL('/static/img/bfm-creditcard.png')">
+        <div id="ccform">
+              <div class="red" style="font-size: 16px; padding: 110px 0 18px 0;">
+                 Please enter your credit card info below to register {{ request.POST.username }} for one year! Big Fan Mail accepts the following credit cards: Visa, MasterCard, American Express, JCB, Discover, and Diners Club.
+              </div>
+              <div>
+                 {{ data.error }}
+              </div>
+               <form action="/register/bfsubscribe/" method="POST" onsubmit="return checkCheckBox(this);" id="payment-form">
+               {% csrf_token %}
+               <span class="payment-errors"></span>
+               <div style="float: left; margin: 0 10px 0 0;">
+                 <label>NAME</label><br> 
+                 <input type="text" size="20" data-stripe="name" value="{{ request.POST.name }}"/>
+               </div>
+               <div style="float: left; margin: 0 10px 0 0;">
+                 <label>ADDRESS 1</label><br>
+                 <input type="text" size="20" name="address1" data-stripe="address_line1" value="{{ request.POST.address1 }}" />
+               </div>
+               <div class="clearx"></div>
+               <div class="fleft" style="margin: 0 10px 0 0;">
+                 <label>ADDRESS 2</label><br>
+                 <input type="text" size="20" name="address2" data-stripe="address_line2" value="{{ request.POST.address2 }}" /> 
+               </div>
+               <div class="fleft" style="margin: 0 10px 0 0;">
+                 <label>CITY</label><br>
+                 <input type="text" size="20" name="city" data-stripe="address_city" value="{{ request.POST.city }}" />
+               </div>
+               <div class="clearx"></div>
+               <div class="fleft" style="margin: 0 10px 0 0;">
+                 <label>STATE</label><br>
+                 <input type="text" maxlength="2" size="2" name="state" data-stripe="address_state"  value="{{ request.POST.state }}" />
+               </div>
+               <div class="fleft" style="margin: 0 10px 0 0;">
+                 <label>ZIP CODE</label><br>
+                 <input type="text" size="10" name="zipcode" data-stripe="address_zip"  value="{{ request.POST.zipcode }}" />
+               </div>
+               <div class="fleft" style="margin: 0 10px 0 0;">
+                 <label>COUNTRY</label><br>
+                 <input type="text" size="4" name="address_country" data-stripe="address_country" value="{{ request.POST.address_country }}"/>
+               </div>
+               <div class="clearx"></div>
+               <div class="fleft" style="margin: 0 10px 0 0;">
+                 <label>CARD NUMBER</label><br>
+                 <input type="text" size="20" name="card_number" data-stripe="number" value="{{ request.POST.card_number }}"/>
+               </div>
+               <div class="fleft" style="margin: 0 10px 0 0;">
+                 <label>CVC</label><br>
+                 <input type="text" size="4" name="cvc" data-stripe="cvc" value="{{ request.POST.cvc }}"/>
+               </div>
+               <div class="clearx"></div>
+               <div class="fleft" id="expire" style="margin: 0 10px 0 0;">
+                 <label>EXPIRATION (MM/YYYY)</label><br>
+                 <input type="text" size="6" name="expmonth" data-stripe="exp-month" value="{{ request.POST.expmonth }}"/>
+                 <span>/</span>
+                 <input type="text" size="6" name="expyear" data-stripe="exp-year" value="{{ request.POST.expyear }}"/>
+               </div>
+               <div class="fleft" style="margin: 0 10px 0 0;">
+                 <label>OFFER CODE</label><br>
+                 <input type="text" size="20" name="coupon" data-stripe="coupon" value="{{ request.POST.coupon }}"/>
+               </div>
+               <div class="clearx"></div>
+               <div class="fleft" style="margin: 10px 40px 5px 0;">
+                     <input id="terms" type="checkbox" name="terms" />I agree with all <a href="/terms" target="bfterms">the terms and conditions</a> of BigFanMail. I will not be charged for the first 90 days of use. After 90 days, unless I cancel my account, I authorize BigFanMail to charge my credit card {{ request.session.BigFanObj.product.price }} minus any offer code value.
+               </div>
+               <!--<div class="fleft" style="margin: 0 40px 0 0;">
+                  <label>AUTO-RENEW</label><br>
+                  <input type="checkbox" name="autorenew"/>
+               </div> -->
+               <div style="padding: 5px 0 0 0;"><input type="submit" value="Submit Payment" /></div>
+               <input type="hidden" name="autorenew" value="yes"/>
+                 </form>
+        </div>
+   </div>
+   <div class="fleft" style="padding: 0 0 0 0;width: 300px; position: relative; z-index: 2;">
+              <div style="padding: 5px; text-align: center; background-color: #e5e6e7; ">
+               After your 90 day free trial, the yearly fee for your Big Fan Email is ${{ request.session.BigFanObj.product.price }} per year.
+              </div>
+              <div class="teamback" style="text-align: center; padding: 5px;">
+                 <b>{{ request.session.BigFanObj.bfname.upper }}@{{ request.session.BigFanObj.domain.domain_name }}</b>
+              </div>
+              <img src="/static/img/bfm-bighead{{ request.session.bfteam }}.png">
+   </div>
+</div>
+{% endblock %}

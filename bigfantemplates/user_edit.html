@@ -1,0 +1,72 @@
+{% extends "base_generic.html" %}
+{% block bodyPane %}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://localhost/media/js/eldarion-ajax-core.js"></script>
+
+<div id="genpage">
+   <div id="changeinfo" style="width: 500px; background-image: URL('/static/img/bfm-changeinfo.png');">
+        <div style="padding: 0 25px 0 35px;">
+              <div class="fleft" style="margin: 0 35px 0 0;">
+                 <div>USERNAME</div>
+                 <div>{{ request.user.username }}</div>
+              </div>
+              <form action="/saveprofile/" method="POST">
+{% csrf_token %}
+              <div class="fleft">
+                 <div>EMAIL ADDRESS</div>
+                 <div class="fleft"><input name="email_address" type="text" value="{{ request.user.email_address }}"></div>
+              </div>
+              <div class="clearx"></div>
+              <div class="fleft">
+                 <div>FIRST NAME</div>
+                 <div class="fleft"><input name="first_name" type="text" value="{{ request.user.first_name }}"></div>
+                 <div class="clearx"></div>
+              </div>
+              <div class="fleft">
+                 <div>LAST NAME</div>
+                 <div class="fleft"><input name="last_name" type="text" value="{{ request.user.last_name }}"></div>
+                 <div class="clearx"></div>
+              </div>
+              <div class="clearx"></div>
+              <div class="fleft">
+                 <div>ADDRESS1</div>
+                 <div class="fleft"><input name="address1" type="text" value="{{ request.user.add1 }}"></div>
+                 <div class="clearx"></div>
+              </div>
+              <div class="fleft">
+                 <div>ADDRESS2</div>
+                 <div class="fleft"><input name="address2" type="text" value="{{ request.user.add2 }}"></div>
+                 <div class="clearx"></div>
+              </div>
+              <div class="clearx"></div>
+              <div class="fleft">
+                 <div>CITY</div>
+                 <div class="fleft"><input name="city" type="text" value="{{ request.user.city }}"></div>
+                 <div class="clearx"></div>
+              </div>
+              <div class="fleft">
+                 <div>STATE</div>
+                 <div class="fleft"><input name="state" type="text" value="{{ request.user.state }}"></div>
+                 <div class="clearx"></div>
+              </div>
+              <div class="clearx"></div>
+              <div class="acctinfo">
+                 <div>ZIPCODE</div>
+                 <div class="fleft"><input name="zipcode" type="text" value="{{ request.user.zipcode }}"></div>
+                 <div class="clearx"></div>
+              </div>
+              <div class="acctinfo">
+                 <div class="fleft"><input name="Submit" type="submit" value="Submit"></div>
+                 <div class="clearx"></div>
+              </div>
+              </form>
+        </div>
+        <div style="padding: 5px 0;"><a href="/profile">Back</a></div>
+   </div>
+   <div class="fleft" style="padding: 0 0 0 100px;">
+              <div class="teamback" style="text-align: center; color: #ffffff;">
+              </div>
+              <img src="/static/img/bfm-bighead2.png">
+   </div>
+</div>
+{% endblock %}

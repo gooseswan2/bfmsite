@@ -1,0 +1,203 @@
+{% extends "base_generic.html" %}
+{% block bodyPane %}
+<script>
+<!--
+$("document").ready(function() {
+    document.forms.MyForm.first_name.focus();
+    var domainname=$( "#seldo option:selected").text();
+    var othername=$( "#seldo option:not(:selected)").text();
+
+   /*  $( "#getyour" ).html("GET YOUR " + domainname.toUpperCase() +" RIGHT NOW"); */
+    $( "div#teamdomain1" ).html("[YOUR NAME]@<br>" + domainname.toUpperCase()); 
+    if (othername){
+        $( "div#teamdomain2" ).html("[YOUR NAME]@<br>" + othername.toUpperCase());
+    }; 
+});
+
+function isOneChecked() {
+  // All <input> tags...
+  var chx = document.getElementsByTagName("input");
+  for (var i=0; i<chx.length; i++) {
+    // If you have more than one radio group, also check the name attribute
+    // for the one you want as in && chx[i].name == 'choose'
+    // Return true from the function on first match of a checked item
+    if (chx[i].checked) {
+      return true;
+    } 
+  }
+  // End of the loop, return false
+  window.alert("Please select an email address.");
+  return false;
+}
+-->
+</script>
+      <div class="fleft" style="padding: 0 0 0 0; margin: 0 0 0 60px;border: 0px solid blue;">
+         <div id="" style="width: 537px; background-image: URL('/static/img/bfm-youremail.png')">
+            <div id="teamsearch" style="padding: 160px 0 0 0;">
+                <form name="MyForm" action="/register/username_search/" method="POST">
+                   {% csrf_token %}
+                   <table>
+                    <tr><td>FIRST NAME<br>
+                    <input type="text" name="first_name" size="25" maxlength="50">
+                    </td><td>
+                    LAST NAME<br>
+                    <input type="text" name="last_name" size="25" maxlength="50">
+                    </td></tr>
+                    <tr><td>YOUR NICKNAME<br>
+                    <input type="text" name="nickname" size="25" maxlength="50">
+                    </td><td>
+                    OCCUPATION<br>
+                    <input type="text" name="occupation" size="25" maxlength="50">
+                    </td></tr>
+                    <tr><td>
+                    <input type="hidden" name="team" value={{ request.session.bfteam }}>
+                    <input type="submit" value="Submit">
+                    </td></tr>
+                   </table>
+                   </form>
+            </div>
+         </div>
+{% if form_errors %}
+         <div id="formerrors">{{ form_errors }}</div>
+{% endif %}
+<!-- SEARCH RESULTS -->
+{% if request.method == "POST" and not form_errors %}
+         <div style="margin: 50px 42px 0 0; ">
+            <div class="fleft">
+               <div id="resultsin">
+                  THE RESULTS ARE IN!<br><div style="font-size: .8em;">Choose the Email address you'd like and hit submit!</div>
+               </div>
+               <div class="fleft" style="padding: 2px; color: #ee2e24; border-bottom: 4px solid #e5e6e7;">
+                  <div style="font-size: .8em;"><br></div>PRICE (US $)
+               </div>
+            </div>
+            <form name="SecondForm" action="/register/" method="GET" onsubmit="return isOneChecked();">
+               {% csrf_token %}
+  {% if not finame.is_registered %}
+            <div class="clearx"></div>
+            <div>
+               <div class="results">
+     {% for fnm in finame.get_try_eaddress %}
+                  <div class="sresults">
+                     <input type="radio" name="bigfanname" id="{{ finame.get_plan }}" class="bfm" required value="{{ fnm }}"> {{ fnm }}
+                  </div>
+     {% endfor %}
+               </div>
+               <div class="fleft" style="padding: 5px 10px;"><img src="{% if finame.get_plan == 'trialpremium' %}/static/img/bfm-3000.png{% elif  finame.get_plan == 'trialstandard' %}/static/img/bfm-1500.png{% elif finame.get_plan = 'ultra-premium' %}/static/img/bfm-7999.png{% endif %}"></div>
+            </div>
+  {% endif %}
+  {% if not nname.is_registered %}
+            <div class="clearx"></div>
+            <div>
+               <div class="results">
+     {% for nom in nname.get_try_eaddress %}
+                  <div class="sresults">
+                     <input type="radio" name="bigfanname" id="{{ nname.get_plan }}" class="bfm" required value="{{ nom }}"> {{ nom }}
+                  </div>
+     {% endfor %}
+               </div>
+               <div class="fleft" style="padding: 5px 10px;"><img src="{% if nname.get_plan == 'trialpremium' %}/static/img/bfm-3000.png{% elif  nname.get_plan == 'trialstandard' %}/static/img/bfm-1500.png{% elif nname.get_plan = 'ultra-premium' %}/static/img/bfm-7999.png{% endif %}"></div>
+            </div>
+  {% endif %}
+  {% if not occupation.is_registered %}
+            <div class="clearx"></div>
+            <div>
+               <div class="results">
+     {% for occ in occupation.get_try_eaddress %}
+                  <div class="sresults">
+                     <input type="radio" name="bigfanname" id="{{ occupation.get_plan }}" class="bfm" required value="{{ occ }}"> {{ occ }}
+                  </div>
+     {% endfor %}
+               </div>
+               <div class="fleft" style="padding: 5px 10px;"><img src="{% if occupation.get_plan == 'trialpremium' %}/static/img/bfm-3000.png{% elif  occupation.get_plan == 'trialstandard' %}/static/img/bfm-1500.png{% elif occupation.get_plan = 'ultra-premium' %}/static/img/bfm-7999.png{% endif %}"></div>
+            </div>
+  {% endif %}
+  {% if request.POST.first_name and request.POST.last_name %}
+     {% if not suggestion1.is_registered %}
+            <div class="clearx"></div>
+            <div>
+               <div class="results">
+        {% for sugg1 in suggestion1.get_try_eaddress %}
+                  <div class="sresults">
+                     <input type="radio" name="bigfanname" id="{{ suggestion1.get_plan }}" class="bfm" required value="{{ sugg1 }}"> {{ sugg1 }}
+                  </div>
+        {% endfor %}
+               </div>
+               <div class="fleft" style="padding: 5px 10px;"><img src="{% if suggestion1.get_plan == 'trialpremium' %}/static/img/bfm-3000.png{% elif  suggestion1.get_plan == 'trialstandard' %}/static/img/bfm-1500.png{% elif suggestion1.get_plan = 'ultra-premium' %}/static/img/bfm-7999.png{% endif %}"></div>
+            </div>
+     {% endif %}
+     {% if not suggestion2.is_registered %}
+            <div class="clearx"></div>
+            <div>
+               <div class="results">
+        {% for sugg2 in suggestion2.get_try_eaddress %}
+                  <div class="sresults">
+                     <input type="radio" name="bigfanname" id="{{ suggestion2.get_plan }}" class="bfm" required value="{{ sugg2 }}"> {{ sugg2 }}
+                  </div>
+        {% endfor %}
+               </div>
+               <div class="fleft" style="padding: 5px 10px;"><img src="{% if suggestion2.get_plan == 'premium' %}/static/img/bfm-3000.png{% elif  suggestion2.get_plan == 'trialstandard' %}/static/img/bfm-1500.png{% elif suggestion2.get_plan = 'ultra-premium' %}/static/img/bfm-7999.png{% endif %}"></div>
+            </div>
+     {% endif %}
+     {% if not suggestion3.is_registered %}
+            <div class="clearx"></div>
+            <div>
+               <div class="results">
+        {% for sugg3 in suggestion3.get_try_eaddress %}
+                  <div class="sresults">
+                     <input type="radio" name="bigfanname" id="{{ suggestion3.get_plan }}" class="bfm" required value="{{ sugg3 }}"> {{ sugg3 }}
+                  </div>
+        {% endfor %}
+               </div>
+               <div class="fleft" style="padding: 5px 10px;"><img src="{% if suggestion3.get_plan == 'trialpremium' %}/static/img/bfm-3000.png{% elif  suggestion3.get_plan == 'trialstandard' %}/static/img/bfm-1500.png{% elif suggestion3.get_plan = 'ultra-premium' %}/static/img/bfm-7999.png{% endif %}"></div>
+            </div>
+     {% endif %}
+     {% if not suggestion4.is_registered %}
+            <div class="clearx"></div>
+            <div>
+               <div class="results">
+        {% for sugg4 in suggestion4.get_try_eaddress %}
+                  <div class="sresults">
+                     <input type="radio" name="bigfanname" id="{{ suggestion4.get_plan }}" class="bfm" required value="{{ sugg4 }}"> {{ sugg4 }}
+                  </div>
+        {% endfor %}
+               </div>
+               <div class="fleft" style="padding: 5px 10px;"><img src="{% if suggestion4.get_plan == 'trialpremium' %}/static/img/bfm-3000.png{% elif  suggestion4.get_plan == 'trialstandard' %}/static/img/bfm-1500.png{% elif suggestion4.get_plan = 'ultra-premium' %}/static/img/bfm-7999.png{% endif %}"></div>
+            </div>
+     {% endif %}
+  {% endif %}
+               <div class="clearx"></div>
+               <div id="plan"></div>
+  {% if finame.is_registered and nname.is_registered and occupation.is_registered and suggestion1.is_registered and suggestion2.is_registered and suggestion3.is_registered and suggestion4.is_registered %}
+               <div class="red">No match for an available email address. Please enter different values.</div>
+  {% else %}
+               <div><input id="submit" type="submit" value="Submit" ></div>
+  {% endif %}
+            </form>
+            </div>
+         </div>
+{% endif %}
+<!-- END SEARCH RESULTS -->
+      </div>
+      <div id="bighead">
+         <div id="getyour">
+                 START YOUR FREE 90 DAY TRIAL NOW!
+         </div>
+         <div class="teamback" style="padding: 0 0 5px 0;">
+  {% for domain in request.session.domain_list %}
+            <div style="padding: 5px 0 0 0; text-align: center;">[YOUR NAME]@<br>{{ domain.domain_name }}</div>
+  {% endfor %}
+         </div>
+         <div><img src="/static/img/bfm-bighead{{ request.session.bfteam }}.png"></div>
+      </div>
+<script type="text/javascript">
+$(".bfm").change(function() {
+    if ($(this).attr("id") == "ultra-premium")
+       $( "div#plan" ).html("<input type='hidden' name='plan' value='ultra-premium'>");
+    else if ($(this).attr("id") == "trialpremium")
+       $( "div#plan" ).html("<input type='hidden' name='plan' value='trialpremium'>");
+    else
+       $( "div#plan" ).html("<input type='hidden' name='plan' value='trialstandard'>");
+});
+</script>
+{% endblock %}

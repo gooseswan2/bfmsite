@@ -1,0 +1,89 @@
+{% extends "base_generic.html" %}
+{% block bodyPane %}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://localhost/media/js/eldarion-ajax-core.js"></script>
+
+<div id="genpage">
+   <div id="diagonal" class="fleft" style="width: 500px; background-image: URL('/static/img/bfm-acctinfo.png');">
+        <div style="padding: 55px 25px 0 45px;">
+              <div class="acctinfo">
+                 <div class="acctlabel">Username:</div>
+                 <div class="fleft">{{ request.user.username }}</div>
+                 <div class="clearx"></div>
+              </div>
+              <div class="acctinfo">
+                 <div class="acctlabel">Email Address:</div>
+                 <div class="fleft">{{ request.user.email_address }}</div>
+                 <div class="clearx"></div>
+              </div>
+              <div class="acctinfo">
+                 <div class="acctlabel">First Name:</div>
+                 <div class="fleft">{{ request.user.first_name }}</div>
+                 <div class="clearx"></div>
+              </div>
+              <div class="acctinfo">
+                 <div class="acctlabel">Last Name:</div>
+                 <div class="fleft">{{ request.user.last_name }}</div>
+                 <div class="clearx"></div>
+              </div>
+              <div class="acctinfo">
+                 <div class="acctlabel">Address1:</div>
+                 <div class="fleft">{{ request.user.add1 }}</div>
+                 <div class="clearx"></div>
+              </div>
+              <div class="acctinfo">
+                 <div class="acctlabel">Address2:</div>
+                 <div class="fleft">{{ request.user.add2 }}</div>
+                 <div class="clearx"></div>
+              </div>
+              <div class="acctinfo">
+                 <div class="acctlabel">City:</div>
+                 <div class="fleft">{{ request.user.city }}</div>
+                 <div class="clearx"></div>
+              </div>
+              <div class="acctinfo">
+                 <div class="acctlabel">State:</div>
+                 <div class="fleft">{{ request.user.state }}</div>
+                 <div class="clearx"></div>
+              </div>
+              <div class="acctinfo">
+                 <div class="acctlabel">Zipcode:</div>
+                 <div class="fleft">{{ request.user.zipcode }}</div>
+                 <div class="clearx"></div>
+              </div>
+              <div class="acctinfo">
+                 <div style="padding: 10px 0 0 0; font-weight: 900; color: #ee2e24">Registered BigFanMail addresses:</div>
+                 <table>
+                   <tr><td><b>Big Fan Email</b></td><td><b>Auto-Renew?</b></td></tr>
+{% for acct in request.session.bfacct %}
+                   <tr><td>
+                    <div class="fleft" style="padding: 10px 10px 0 0;">{{ acct.bfname.bfname }}@{{ acct.bfname.domain }}</div>
+                   </td><td>
+                    <div class="fleft" style="padding: 10px 10px 0 0; width: 100px; text-align: center;">
+   {% if acct.auto_renew %}
+                Yes 
+   {% else %}
+                No
+   {% endif %}
+                    </div>
+                   </td><td>
+                    <div class="fleft" style="padding: 10px 10px 0 0; width: 100px; text-align: center;">
+                      <a href="/editaccount/{{ forloop.counter0}}">edit</a>
+                    </div>
+                   </td></tr>
+{% endfor %}
+                 </table>
+                 <div class="acctinfo">
+                    <div style="padding: 10px 0 0 0;"><a href="/editprofile">Click here to change account information.</a></div>
+                    <div style="padding: 10px 0 0 0;"><a href="/passwordform">Click here to change password.</a></div>
+                 </div>
+              </div>
+        </div>
+   </div>
+   <div class="fleft" style="padding: 0 0 0 100px;">
+              <div class="teamback" style="text-align: center; color: #ffffff;">
+              </div>
+              <img src="/static/img/bfm-bighead2.png">
+   </div>
+</div>
+{% endblock %}

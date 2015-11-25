@@ -1,0 +1,389 @@
+body {
+       background-color: #ffffff;
+       font-family: Arial, Helvetica, sans-serif;
+       /*font-family: "QuickType Condensed", Helvetica, sans-serif;*/
+       padding: 0;
+       margin: 0;
+       color: #7c7b7b;
+}
+
+a:link {
+       text-decoration: none;
+       color: #ee2e24;
+}
+
+a img {
+       border: none;
+}
+
+img {
+       border: none;
+}
+
+img#diags {
+       position: absolute;
+       left: 100px; 	
+       top: 100px; 	
+       z-index: 0;
+}
+
+label {
+       font-size: 1.2em;
+       padding: 2px;
+}
+
+#bfmtext {
+       position: relative;
+       z-index: 2;
+       padding: 0 0 0 0;
+       margin: 0 60px 0 0;
+       font-size: 1.1em;
+}
+
+#suptext {
+       position: relative;
+       z-index: 2;
+       width: 475px;
+       padding: 0 0 0 0;
+       margin: 0 0 0 0;
+       font-size: 1.1em;
+}
+
+#container {
+       margin: 0 auto;
+       padding: 0;
+       width: 1280px;
+       background-color: #ffffff;
+}
+
+#headerPane {
+       margin: 0; 
+       padding: 0;
+}
+
+#bodyPane {
+       width: auto;
+       padding: 80px 0 0 0px;
+}
+
+#leftContainer {
+       width: auto;
+       margin: 0 0 0 0;
+}
+
+#rightContainer {
+       float: left;
+       width: 226px;
+}
+
+#rightContainer a:link {
+       color: #7c7b7b; 
+}
+
+#topblack {
+       background-color: #000000;
+       color: #ffffff;
+       height: 20px;
+       margin: 0;
+       padding: 0;
+       width: 100%;
+}
+
+#upperleft {
+       float: left; 
+       border-top: solid gray 1px;
+       border-bottom: solid gray 1px; 
+       border-left: solid gray 1px;
+       padding: 0;
+       margin: 0;
+}
+
+#findyourteam  {
+       position: absolute;
+       top: 187px;
+       left: 35px;
+       /* left: 180px; */
+       z-index: 1;
+}
+
+#ballsimg  {
+       position: absolute;
+       top: 216px;
+       left: 572px;
+}
+
+#ballsd  td {
+       padding: 0 8px 0;
+       font-size: .8em;
+       text-align: center;
+       width: 55px;
+}
+
+#ballsd  td a, #ballse td a {
+       text-decoration: none;
+}
+
+#ballse  td {
+       padding: 0 8px 0;
+       font-size: .8em;
+       text-align: center;
+       width: 55px;
+}
+
+#changeinfo {
+       float: left;
+       height: 280px;
+       padding: 50px 0 0 0 ;
+       margin: 0 0 0 40px ;
+       position: relative;
+       z-index: 2;
+}
+
+#changeinfo input {
+       border: 5px #7c7b7b solid;
+       margin: 4px ;
+       height: 20px ;
+}
+
+#changeinfo input[type=submit] {
+       height: 30px;
+}
+
+#teamsearch {
+       position: relative;
+       z-index: 2;
+}
+
+#teamsearch input {
+       border: 5px #7c7b7b solid;
+       height: 30px;
+       width: 18em;
+       padding: 0;
+       margin: 2px;
+}
+
+#teamsearch input[type=submit] {
+       width:9em;
+}
+
+#registration input[type=submit] {
+       width:9em;
+}
+
+#registration input {
+       border: 5px #7c7b7b solid;
+       height: 30px;
+       width: 225px;
+       padding: 0;
+       margin: 0 5px 0 0;
+}
+
+#domname {
+       text-align: center;
+       color: #ffffff;
+       background-color: #55af78;
+       height: 63px;
+       font-size: 1.5em;
+}
+
+#bighead {
+       position: relative;
+       float: left;
+       color: #000000; 
+       text-align: center; 
+       padding: 0 0 0 0; 
+       margin: 0 0 0 0; 
+       z-index: 2;
+}
+
+#resultsin {
+       float: left;
+       width: 350px; 
+       padding: 2px; 
+       margin: 0 20px 5px 0; 
+       color: #ee2e24; 
+       border-bottom: 4px solid #e7e7e8;
+}
+
+#ccform {
+       position: relative;
+       z-index: 2;
+}
+
+#ccform input {
+       border: 5px solid #7c7b7b;
+       height: 20px;
+}
+
+#ccform input[type=submit] {
+       height: 30px;
+}
+
+#diagonal {
+       margin: 0 0 0 10px;
+       position: relative;
+       width: 537px; 
+       height: 334px; 
+       z-index: 2;
+    /*   background-image: url('http://localhost/static/img/bfm-diaglines.jpg'); */
+}
+
+#getyour {
+       background-color: #e7e7e8; 
+       font-size: .9em; 
+       padding: 14px 8px;
+}
+
+#teamdomain1 {
+       font-size: 1.15em;
+       padding: 4px 2px ;
+}
+
+#genpage {
+       float: left;
+       padding: 0 0 0 25px; 
+       margin: 0 0 0 5px;
+       width: 940px;
+}
+
+#formerrors {
+       padding: 0 0 50px 0; 
+       color: #ee2e24; 
+}
+
+#copyrightFooter {
+       border: 1px solid #7c7b7b;
+       padding: 3px;
+       margin: 5px 0 0 0;
+}
+
+#rouser {
+       color: #787778;
+}
+
+table#ballstbl tr td {
+       text-align: center;
+       padding: 0 0 0 20px;
+}
+
+table#ballstbl tr td a:link {
+       color: #ee2e24;
+}
+
+ul#topnav {
+       float: left;
+       margin: 0;
+       padding: 0;
+       list-style-type:none;
+       border-top: solid #7c7b7b 1px;
+       border-bottom: solid #7c7b7b 1px;
+       border-left: solid #7c7b7b 1px;
+       background-color: #ffffff;
+       color: #7c7b7b;
+}
+
+ul#topnav li {
+       float: left;
+       margin: 0;
+       padding: 0;
+       font-size: .9em;
+       width: 221px;
+}
+
+ul#topnav li a {
+       display: block;
+       text-decoration: none; 
+       border-right: solid #7c7b7b 1px;
+       color: #7c7b7b;
+       padding: 17px 0px 30px 30px;
+       margin: 0;
+}
+
+ul#topnav li a:hover {
+       background-color: #ee2e24;
+       color: #ffffff;
+}
+
+.sresults {
+       padding: 5px 5px;
+       font-size: .85em; 
+       color: #7c7b7b;
+}
+
+.fleft {
+       float: left;
+}
+
+.red {
+       color: #ee2e24;
+}
+
+.darkgray {
+       color: #7c7b7b;
+}
+
+.ltgray {
+       color: #e7e7e8;
+}
+
+.black {
+       color: #000000;
+}
+
+.clearx {
+       clear: both;
+}
+
+.smhead {
+       float: left;
+       /*width: 100px;*/
+       margin: 0px 46px;
+       text-align: center;
+}
+
+.smheadimg {
+       border-bottom: solid #e7e7e8 5px;
+       margin: 0 0 10px;
+}
+
+.above_pyr {
+       margin: 15px 0 0 0;
+}
+
+.grayback {
+       background-color: #8f9194;
+       color: #ffffff;
+}
+
+.balls a {
+       margin: 0 30px;
+}
+
+.sectbox {
+       background-image:url('http://localhost/static/img/bfm-sectbox.png');
+       color: #ffffff;
+       padding: 0px 0 0 0;
+       font-size: 1.2em; 
+}
+
+.sectbox:hover {
+       background-image:url('http://localhost/static/img/bfm-sectboxred.png');
+       color: #ffffff;
+}
+
+.results {
+       float: left;
+       width: 350px; 
+       margin: 0 20px 0 0;
+}
+
+.acctlabel {
+       float: left;
+       width: 175px;
+       font-size: 1.2em;
+}
+
+img.imge {
+       position: relative;
+       z-index: 2;
+}
